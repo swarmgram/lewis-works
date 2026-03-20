@@ -12,19 +12,22 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Lewis",
-  description: "Something is coming.",
+  title: "Lewis — The personality model that remembers",
+  description:
+    "Lewis 1.5 beats Claude Opus on 3/6 personality axes at 1/125th the cost. Persistent memory architecture with $0 scaling. Enterprise API for market research, game AI, and simulation.",
   openGraph: {
-    title: "Lewis",
-    description: "Something is coming.",
+    title: "Lewis — The personality model that remembers",
+    description:
+      "Lewis 1.5 beats frontier models on personality divergence, human likeness, and character persistence. $0 memory cost at any scale.",
     url: "https://lewis.works",
     siteName: "Lewis",
     type: "website",
   },
   twitter: {
-    card: "summary",
-    title: "Lewis",
-    description: "Something is coming.",
+    card: "summary_large_image",
+    title: "Lewis — The personality model that remembers",
+    description:
+      "Lewis 1.5 beats frontier models on personality divergence, human likeness, and character persistence. $0 memory cost at any scale.",
   },
   metadataBase: new URL("https://lewis.works"),
 };
@@ -32,7 +35,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
+      >
         {children}
       </body>
     </html>
