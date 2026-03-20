@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const LEWIS_API_URL = process.env.LEWIS_API_URL || "http://localhost:8000/v1";
+const LEWIS_API_URL =
+  process.env.LEWIS_API_URL ||
+  "https://knl3iun7rqcvmp-8000.proxy.runpod.net/v1";
 
 export async function POST(req: NextRequest) {
   try {
