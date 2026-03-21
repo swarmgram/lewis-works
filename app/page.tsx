@@ -30,6 +30,7 @@ function Nav() {
           <a href="#memory" className="hover:text-white transition-colors">Memory</a>
           <a href="#models" className="hover:text-white transition-colors">Models</a>
           <a href="#products" className="hover:text-white transition-colors">Products</a>
+          <a href="/case-study" className="hover:text-white transition-colors text-indigo-400/70">Case Study</a>
           <a href="/demo" className="hover:text-white transition-colors text-amber-500/70">Demo</a>
           <a href="#access" className="px-3.5 py-1.5 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 transition-colors">
             Request Access
@@ -598,6 +599,77 @@ function Products() {
 }
 
 /* ─────────────────────────────────────────────────────────
+   CASE STUDY BANNER
+───────────────────────────────────────────────────────── */
+function CaseStudyBanner() {
+  return (
+    <section className="py-16 px-6 border-t border-white/[0.06]">
+      <div className="max-w-5xl mx-auto">
+        <div className="reveal rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-950/20 to-zinc-950 overflow-hidden">
+          <div className="p-8 sm:p-12 grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 text-[10px] font-mono text-indigo-400 tracking-widest uppercase border border-indigo-500/20 rounded-full px-3 py-1 mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                New · Real Case Study
+              </div>
+              <h2 className="font-serif text-white leading-tight mb-3" style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>
+                700 Jobs Gone: How AI&apos;s Customer Service Takeover Lands Across America
+              </h2>
+              <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+                We ran the Klarna AI layoff announcement through 10 real Lewis agents — 2 cohorts,
+                20 live model calls, before and after. The results were counterintuitive.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="/case-study"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors"
+                >
+                  Read the Study
+                  <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-none stroke-current stroke-[1.5]">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                </a>
+                <a
+                  href="/swarmgram_case_study.pdf"
+                  download="swarmgram_case_study.pdf"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-indigo-500/30 text-indigo-400 text-sm hover:border-indigo-500/60 transition-colors"
+                >
+                  <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-none stroke-current stroke-[1.5]">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 2v9M4 8l4 4 4-4M2 13h12" />
+                  </svg>
+                  Download PDF
+                </a>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {[
+                { cohort: "Gen Z Urban (18–27)", before: "2 skeptical, 2 neutral, 1 accepting", after: "0 skeptical, 4 neutral, 1 accepting" },
+                { cohort: "Rural Adults (40–65)", before: "4 skeptical, 0 neutral, 1 accepting", after: "1 skeptical, 3 neutral, 1 accepting" },
+              ].map(({ cohort, before, after }) => (
+                <div key={cohort} className="rounded-lg border border-white/[0.06] bg-zinc-950 p-4">
+                  <p className="text-[10px] font-mono text-indigo-400/70 tracking-widest uppercase mb-2">{cohort}</p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <span className="text-zinc-600">Before · </span>
+                      <span className="text-zinc-400">{before}</span>
+                    </div>
+                    <div>
+                      <span className="text-zinc-600">After · </span>
+                      <span className="text-zinc-300">{after}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <p className="text-xs text-zinc-700 text-right">Total inference cost: $0.04</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
    REQUEST ACCESS
 ───────────────────────────────────────────────────────── */
 function RequestAccess() {
@@ -682,6 +754,7 @@ export default function Home() {
         <Benchmarks />
         <ModelFamily />
         <Products />
+        <CaseStudyBanner />
         <RequestAccess />
       </main>
       <Footer />
