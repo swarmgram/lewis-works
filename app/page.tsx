@@ -613,11 +613,11 @@ function CaseStudyBanner() {
                 New · Real Case Study
               </div>
               <h2 className="font-serif text-white leading-tight mb-3" style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>
-                700 Jobs Gone: How AI&apos;s Customer Service Takeover Lands Across America
+                700 Jobs Gone: Synthetic Opinion Dynamics Across Two American Demographics
               </h2>
               <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                We ran the Klarna AI layoff announcement through 10 real Lewis agents — 2 cohorts,
-                20 live model calls, before and after. The results were counterintuitive.
+                We ran the real Klarna AI announcement through 60 Lewis agents across 3 waves. Baseline
+                validated against SurveyMonkey 2023. The bounce-back finding can&apos;t be seen in a single-wave survey.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a
@@ -643,8 +643,8 @@ function CaseStudyBanner() {
             </div>
             <div className="space-y-3">
               {[
-                { cohort: "Gen Z Urban (18–27)", before: "2 skeptical, 2 neutral, 1 accepting", after: "0 skeptical, 4 neutral, 1 accepting" },
-                { cohort: "Rural Adults (40–65)", before: "4 skeptical, 0 neutral, 1 accepting", after: "1 skeptical, 3 neutral, 1 accepting" },
+                { cohort: "Gen Z Urban (18–27) · n=30", before: "70% skeptical baseline", after: "27% → bounce back to 57%" },
+                { cohort: "Rural Adults (40–65) · n=30", before: "63% skeptical (vs 58% real)", after: "23% → bounce back to 50%" },
               ].map(({ cohort, before, after }) => (
                 <div key={cohort} className="rounded-lg border border-white/[0.06] bg-zinc-950 p-4">
                   <p className="text-[10px] font-mono text-indigo-400/70 tracking-widest uppercase mb-2">{cohort}</p>

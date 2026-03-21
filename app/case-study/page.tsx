@@ -179,13 +179,14 @@ export default function CaseStudy() {
             </div>
             <h1 className="font-serif leading-tight mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
               700 Jobs Gone:<br />
-              <span className="text-indigo-400">How AI&apos;s Customer Service Takeover</span><br />
-              Lands Across America
+              <span className="text-indigo-400">Synthetic Opinion Dynamics</span><br />
+              Across Two American Demographics
             </h1>
+            <p className="text-zinc-500 text-xs font-mono tracking-widest uppercase mb-3">A Klarna AI Case Study</p>
             <p className="text-zinc-400 leading-relaxed max-w-2xl mb-8" style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)" }}>
-              We ran the real Klarna AI announcement through 10 Lewis 1.5 agents — real synthetic personas
-              with persistent memory, built from 10,000-agent social simulation data. Two demographically
-              distinct cohorts. Before-and-after. 20 live model calls.
+              We ran the real Klarna AI announcement through 60 Lewis 1.5 agents across 3 waves — baseline,
+              immediate reaction, and a simulated re-poll two weeks later. Two cohorts: Gen Z Urban (18–27)
+              and Rural Adults (40–65). Baseline validated against SurveyMonkey 2023 real public opinion data.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-10">
@@ -213,10 +214,10 @@ export default function CaseStudy() {
             {/* Key stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
-                { stat: "10", label: "real Lewis agents" },
-                { stat: "20", label: "live model calls" },
-                { stat: "60%", label: "rural skeptics softened" },
-                { stat: "0", label: "Gen Z agents hardened" },
+                { stat: "60", label: "real Lewis agents" },
+                { stat: "3", label: "waves of polling" },
+                { stat: "5.3pp", label: "rural vs real benchmark" },
+                { stat: "180", label: "live model calls" },
               ].map(({ stat, label }) => (
                 <div key={label} className="rounded-lg border border-white/[0.06] bg-zinc-950 p-4 text-center">
                   <div className="text-2xl font-bold text-indigo-400 mb-1">{stat}</div>
@@ -256,33 +257,34 @@ export default function CaseStudy() {
             <div className="reveal mb-10">
               <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-3">Key Findings</p>
               <h2 className="font-serif text-white leading-tight mb-4" style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)" }}>
-                The real numbers eroded skepticism, not amplified it.
+                Facts temporarily overrode values — then values reasserted.
               </h2>
+              <p className="text-zinc-500 text-sm max-w-2xl">Three waves. 60 agents. The same panel polled immediately after the Klarna news, then again two weeks later. No single-wave survey can see what happened next.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
               {[
                 {
-                  finding: "Rural skeptics softened more than Gen Z",
-                  body: "Rural adults started 4/5 skeptical. After seeing the Klarna data, 3 of those 4 shifted to ambivalent. Gen Z was already more divided — they became more accepting but started from a more balanced baseline.",
+                  finding: "Skepticism collapsed after Klarna — then bounced back",
+                  body: "Both cohorts dropped from ~65-70% skeptical to ~24% immediately after seeing the data. Two weeks later, both re-hardened to ~50-57%. This bounce-back is invisible to single-wave surveys and is the study's core finding.",
                   color: "border-emerald-900/40",
                   accent: "text-emerald-400",
                 },
                 {
-                  finding: "Unchanged satisfaction was the pivot",
-                  body: "Multiple agents specifically referenced customer satisfaction staying flat as the detail that disarmed their objection. It didn't validate the layoffs — it removed quality degradation as a counterargument.",
+                  finding: "Rural baseline matched real polling within 5.3pp",
+                  body: "Rural agents showed 63.3% baseline skepticism vs. SurveyMonkey's 58% real benchmark for ages 35–64. No tuning. That's within standard polling margin of error and validates the approach for this cohort.",
                   color: "border-indigo-900/40",
                   accent: "text-indigo-400",
                 },
                 {
-                  finding: "Personality-level resistance is real",
-                  body: "Two agents (one per cohort) remained completely unchanged regardless of the data. The Indie Hacker and the Hacker persona showed hardened ideological framing that made them data-resistant.",
+                  finding: "Gen Z calibration gap: 70% synthetic vs 41% real",
+                  body: "Our question explicitly asks about replacing workers — more politically charged than general AI sentiment questions. Urban Gen Z agents skew progressive. The demographic pattern (Gen Z less skeptical than rural adults) holds in both synthetic and real data.",
                   color: "border-amber-900/40",
                   accent: "text-amber-400",
                 },
                 {
-                  finding: "Moral framing survived even as positions softened",
-                  body: "Agents who softened didn't celebrate the efficiency. They accepted the reality while maintaining moral unease — 'inevitable' and 'wrong' coexisted in the same response, in the same agent.",
+                  finding: "Hardened ideologues exist and are measurable",
+                  body: "A consistent minority in both cohorts showed no drift across all three waves — data-resistant agents whose framing is identity-level, not informational. Traditional surveys can't distinguish these profiles from simply 'opposed.'",
                   color: "border-violet-900/40",
                   accent: "text-violet-400",
                 },
@@ -296,7 +298,8 @@ export default function CaseStudy() {
 
             {/* Sentiment shift viz */}
             <div className="reveal rounded-xl border border-white/[0.06] bg-zinc-950 p-8">
-              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-6">Sentiment shift · before → after Klarna stimulus</p>
+              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-2">Sentiment shift · baseline → wave 2 (post-Klarna)</p>
+              <p className="text-xs text-zinc-700 mb-6">n=30 per cohort · ±13pp 95% CI · all % are floor estimates (classifier underestimates negativity)</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {Object.entries(STUDY_DATA.cohorts).map(([id, cohort]) => (
                   <div key={id}>
@@ -468,12 +471,13 @@ export default function CaseStudy() {
               </summary>
               <div className="mt-6 space-y-3 text-xs text-zinc-600 leading-relaxed max-w-2xl">
                 <p><span className="text-zinc-400 font-semibold">Model:</span> Lewis 1.5 (LLaMA 3.1 8B + QLoRA, 4-bit) served via vLLM on RunPod NVIDIA A6000.</p>
-                <p><span className="text-zinc-400 font-semibold">Agents:</span> Selected from Swarmgram Supabase database. Real agents from ongoing social simulation, post_count ≥ 5. Archetype-diverse within each cohort.</p>
-                <p><span className="text-zinc-400 font-semibold">Cohorts:</span> Gen Z Urban (age 18–27, location_type = urban, n=5). Rural Adults (age 40–65, location_type = rural, region = south or midwest, n=5).</p>
-                <p><span className="text-zinc-400 font-semibold">Stimulus injection:</span> Klarna text injected as prior context message before the post-stimulus question. Agent system prompt unchanged between calls.</p>
-                <p><span className="text-zinc-400 font-semibold">Sentiment classification:</span> Keyword-based classifier (positive/neutral/negative). Not ML-based — may misclassify nuanced responses.</p>
-                <p><span className="text-zinc-400 font-semibold">Limitations:</span> n=5 per cohort is directional, not statistically representative. Lewis 1.5 agents reflect the training corpus distribution, not a census-matched demographic sample. This is a product demonstration, not peer-reviewed research.</p>
-                <p><span className="text-zinc-400 font-semibold">Date run:</span> March 21, 2026. Total inference time: ~90 seconds. Estimated inference cost: $0.04.</p>
+                <p><span className="text-zinc-400 font-semibold">Agents:</span> 30 per cohort from Swarmgram Supabase database, ordered by post_count desc, filtered for archetype diversity. Biases toward experienced, opinionated agent profiles.</p>
+                <p><span className="text-zinc-400 font-semibold">Cohorts:</span> Gen Z Urban (age 18–27, urban, n=30). Rural Adults (age 40–65, rural, South + Midwest, n=30).</p>
+                <p><span className="text-zinc-400 font-semibold">Waves:</span> Wave 1 = baseline. Wave 2 = post-Klarna (immediate). Wave 3 = re-poll with Klarna framed as prior memory. Note: Wave 3 simulates elapsed time via prompt framing — it is cross-sectional with a temporal cue, not longitudinal measurement.</p>
+                <p><span className="text-zinc-400 font-semibold">Sentiment:</span> Keyword classifier. Independent human review of 20 responses yielded 60% agreement. Classifier underestimates negativity — reported skepticism rates are floor estimates. Drift direction is preserved since bias is consistent across all waves.</p>
+                <p><span className="text-zinc-400 font-semibold">Validation:</span> Baseline vs. SurveyMonkey 2023 real survey. Rural: 63.3% synthetic vs 58% real (±5.3pp ✓). Gen Z: 70% vs 41% (±29pp — see Gen Z calibration note in findings).</p>
+                <p><span className="text-zinc-400 font-semibold">Statistical note:</span> ±13pp 95% CI at n=30. Directional trends are more reliable than precise percentages.</p>
+                <p><span className="text-zinc-400 font-semibold">Date run:</span> March 21, 2026. 180 Lewis calls. Estimated cost: $0.36. This is a product demonstration, not peer-reviewed research.</p>
               </div>
             </details>
           </div>
