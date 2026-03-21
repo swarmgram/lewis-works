@@ -305,13 +305,49 @@ const PARTY_COLORS: Record<Party, string> = {
   Libertarian: "bg-amber-500/90 text-black",
 };
 
-function classifySentiment(text: string): Sentiment {
+function classifySentiment(text: string, question: string): Sentiment {
   const lower = text.toLowerCase();
-  const supportWords = ["support", "ban it", "agree", "absolutely", "no-brainer", "should be", "need to", "must"];
-  const opposeWords = ["oppose", "against", "overreach", "shouldn't", "don't ban", "bad idea", "dangerous precedent", "my choice"];
+  const q = question.toLowerCase();
+
+  const isYesNoQuestion = /^(should|do you|would you|is it|are you|can we|must we|will)\b/.test(q.trim());
+
+  if (isYesNoQuestion) {
+    const strongYes = /\b(yes|absolutely|definitely|of course|no-brainer|i agree|100%|without a doubt)\b/;
+    const strongNo = /\b(no[,.]|absolutely not|no way|never|i disagree|i don't think so|bad idea)\b/;
+    const yesMatch = strongYes.test(lower);
+    const noMatch = strongNo.test(lower);
+
+    if (yesMatch && !noMatch) return "supportive";
+    if (noMatch && !yesMatch) return "opposed";
+  }
+
+  const supportSignals = [
+    /\bi (fully |strongly )?(support|agree|endorse|approve)\b/,
+    /\byes[,. !]/,
+    /\babsolutely\b(?!.*\bnot\b)/,
+    /\bno-brainer\b/,
+    /\bban it\b(?!.*\bshouldn't\b)/,
+    /\b(great|good) idea\b/,
+  ];
+  const opposeSignals = [
+    /\bi (fully |strongly )?(oppose|disagree|reject)\b/,
+    /\bno[,. !](?!.*\bbut yes\b)/,
+    /\babsolutely not\b/,
+    /\boverreach\b/,
+    /\bbad idea\b/,
+    /\bdangerous precedent\b/,
+    /\bshouldn't\b/,
+    /\bshould not\b/,
+    /\bdon't (think|believe|support|agree)\b/,
+    /\bmy choice\b/,
+    /\bnot the answer\b/,
+    /\bwon't work\b/,
+  ];
+
   let sup = 0, opp = 0;
-  for (const w of supportWords) if (lower.includes(w)) sup++;
-  for (const w of opposeWords) if (lower.includes(w)) opp++;
+  for (const r of supportSignals) if (r.test(lower)) sup++;
+  for (const r of opposeSignals) if (r.test(lower)) opp++;
+
   if (sup > opp) return "supportive";
   if (opp > sup) return "opposed";
   return "nuanced";
@@ -343,7 +379,7 @@ function FocusGroupPanel() {
       PERSONAS.map(async (persona) => {
         const result = await callLewis(persona.systemPrompt, prompt.trim(), 200);
         const quote = result.live && result.content ? result.content : persona.fallbackQuote;
-        const sentiment = classifySentiment(quote);
+        const sentiment = classifySentiment(quote, prompt.trim());
         return { persona, quote, sentiment, live: result.live };
       })
     );
