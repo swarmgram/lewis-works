@@ -106,7 +106,7 @@ export async function GET() {
 
     const topArchetypes = Object.entries(archetypeCounts)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 12)
+      .slice(0, 40)
       .map(([name, count]) => ({ name, count, pct: Math.round((count / total) * 100) }));
 
     const ageWithPct = Object.entries(ageBuckets)
