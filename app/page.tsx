@@ -777,59 +777,107 @@ function RequestAccess() {
 interface DemoData {
   total: number;
   archetypes: { name: string; count: number; pct: number }[];
-  gender: { name: string; count: number; pct: number }[];
   age: { range: string; count: number; pct: number }[];
   mbti: { group: string; count: number; pct: number }[];
+  party: { id: string; label: string; count: number; pct: number }[];
+  trust: { id: string; label: string; count: number; pct: number }[];
   location: { type: string; count: number; pct: number }[];
+  region: { name: string; count: number; pct: number }[];
+}
+
+const ARCHETYPE_COLORS: Record<string, string> = {
+  "Conspiracy Theorist": "bg-rose-500",
+  "Philosopher": "bg-violet-500",
+  "Policy Wonk": "bg-blue-500",
+  "Crypto Degen": "bg-amber-500",
+  "MAGA Patriot": "bg-red-600",
+  "Tech Bro": "bg-cyan-500",
+  "Activist": "bg-emerald-500",
+  "Creator": "bg-pink-500",
+  "Indie Hacker": "bg-orange-400",
+  "Hacker": "bg-lime-500",
+  "Urban Explorer": "bg-teal-500",
+  "Cybersecurity Watch": "bg-blue-400",
+};
+
+function BarChart({ items, color = "bg-amber-500/60", labelKey, pctKey }: {
+  items: Record<string, string | number>[];
+  color?: string;
+  labelKey: string;
+  pctKey: string;
+}) {
+  return (
+    <div className="space-y-3">
+      {items.map((item, i) => (
+        <div key={i} className="flex items-center gap-3">
+          <span className="text-[11px] font-mono text-zinc-500 w-24 shrink-0 truncate capitalize">{item[labelKey]}</span>
+          <div className="flex-1 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+            <div className={`h-full ${color} rounded-full`} style={{ width: `${item[pctKey]}%` }} />
+          </div>
+          <span className="text-[11px] text-zinc-500 w-8 text-right">{item[pctKey]}%</span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function TheSwarm() {
   const [demo, setDemo] = useState<DemoData | null>(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch("/api/demographics")
       .then((r) => r.json())
-      .then(setDemo)
-      .catch(() => {});
+      .then((d) => {
+        if (d.error || !d.total) { setError(true); return; }
+        setDemo(d);
+      })
+      .catch(() => setError(true));
   }, []);
-
-  const ARCHETYPE_COLORS: Record<string, string> = {
-    "Conspiracy Theorist": "bg-rose-500",
-    "Philosopher": "bg-violet-500",
-    "Policy Wonk": "bg-blue-500",
-    "Crypto Degen": "bg-amber-500",
-    "MAGA Patriot": "bg-red-600",
-    "Tech Bro": "bg-cyan-500",
-    "Activist": "bg-emerald-500",
-    "Creator": "bg-pink-500",
-  };
 
   return (
     <section id="the-swarm" className="py-20 px-6 border-t border-white/[0.06]">
       <div className="max-w-5xl mx-auto">
-        <div className="reveal text-center mb-14">
+        {/* Header — always visible, no reveal class */}
+        <div className="text-center mb-12">
           <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-3">Live Population</p>
           <h2 className="font-serif text-white leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}>
             The Swarm
           </h2>
           <p className="text-zinc-500 max-w-xl mx-auto text-base">
-            {demo ? (
-              <>A live, growing population of <span className="text-white font-semibold">{demo.total.toLocaleString()}</span> persistent AI agents — demographically diverse, behaviorally distinct. This is the panel behind every Lewsearch study.</>
-            ) : (
-              "A live, growing population of persistent AI agents — demographically diverse, behaviorally distinct."
-            )}
+            {demo
+              ? <>A live population of <span className="text-white font-semibold">{demo.total.toLocaleString()}</span> persistent AI agents — demographically diverse, behaviorally distinct. This is the panel behind every Lewsearch study.</>
+              : "A live, growing population of persistent AI agents — demographically diverse, behaviorally distinct. The panel behind every Lewsearch study."
+            }
           </p>
         </div>
 
-        {demo ? (
-          <div className="space-y-10">
-            {/* Top stats row */}
-            <div className="reveal grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {/* Loading */}
+        {!demo && !error && (
+          <div className="flex justify-center py-16">
+            <div className="flex gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <span key={i} className="w-2 h-2 rounded-full bg-amber-500/40 animate-pulse" style={{ animationDelay: `${i * 0.15}s` }} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Error fallback */}
+        {error && (
+          <p className="text-center text-zinc-600 text-sm py-8">Demographics loading — check back shortly.</p>
+        )}
+
+        {/* Content — no reveal classes, renders immediately when data arrives */}
+        {demo && (
+          <div className="space-y-8">
+            {/* Stats row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
                 { label: "Total Agents", value: demo.total.toLocaleString(), color: "text-amber-400" },
-                { label: "Archetypes", value: demo.archetypes.length.toString(), color: "text-white" },
-                { label: "MBTI Groups", value: "4", color: "text-white" },
-                { label: "Regions", value: demo.location.length.toString(), color: "text-white" },
+                { label: "Archetypes", value: String(demo.archetypes.length), color: "text-white" },
+                { label: "MBTI Types", value: "16", color: "text-white" },
+                { label: "Regions", value: String(demo.region.length), color: "text-white" },
               ].map((s) => (
                 <div key={s.label} className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-5 text-center">
                   <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
@@ -838,92 +886,90 @@ function TheSwarm() {
               ))}
             </div>
 
-            <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Age */}
-              <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
-                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Age Distribution</p>
-                <div className="space-y-3">
-                  {demo.age.filter((a) => a.count > 0).map((a) => (
-                    <div key={a.range} className="flex items-center gap-3">
-                      <span className="text-[11px] font-mono text-zinc-500 w-12 shrink-0">{a.range}</span>
-                      <div className="flex-1 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
-                        <div className="h-full bg-amber-500/60 rounded-full transition-all" style={{ width: `${a.pct}%` }} />
+            {/* Age + Political */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {demo.age.length > 0 && (
+                <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                  <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Age Distribution</p>
+                  <BarChart items={demo.age as unknown as Record<string, string | number>[]} labelKey="range" pctKey="pct" color="bg-amber-500/60" />
+                </div>
+              )}
+              {demo.party.length > 0 && (
+                <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                  <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Political Affiliation</p>
+                  <BarChart items={demo.party as unknown as Record<string, string | number>[]} labelKey="label" pctKey="pct" color="bg-indigo-500/60" />
+                </div>
+              )}
+            </div>
+
+            {/* MBTI + Trust */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {demo.mbti.length > 0 && (
+                <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                  <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Personality Groups (MBTI)</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {demo.mbti.map((m) => (
+                      <div key={m.group} className="rounded-lg bg-zinc-900/60 px-3 py-3 text-center">
+                        <p className="text-lg font-bold text-white">{m.pct}%</p>
+                        <p className="text-[11px] text-zinc-500 mt-0.5">{m.group}</p>
+                        <p className="text-[10px] text-zinc-700 mt-0.5">{m.count.toLocaleString()} agents</p>
                       </div>
-                      <span className="text-[11px] text-zinc-500 w-8 text-right">{a.pct}%</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* Gender */}
-              <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
-                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Gender</p>
-                <div className="space-y-3">
-                  {demo.gender.map((g) => (
-                    <div key={g.name} className="flex items-center gap-3">
-                      <span className="text-[11px] font-mono text-zinc-500 w-20 shrink-0">{g.name}</span>
-                      <div className="flex-1 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
-                        <div className="h-full bg-indigo-500/60 rounded-full" style={{ width: `${g.pct}%` }} />
+              )}
+              {demo.trust.length > 0 && (
+                <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                  <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Institutional Trust</p>
+                  <BarChart items={demo.trust as unknown as Record<string, string | number>[]} labelKey="label" pctKey="pct" color="bg-rose-500/50" />
+                  {demo.location.length > 0 && (
+                    <>
+                      <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-4 mt-6">Location Type</p>
+                      <div className="flex flex-wrap gap-2">
+                        {demo.location.map((l) => (
+                          <span key={l.type} className="px-3 py-1 rounded-full border border-white/[0.06] bg-zinc-900/40 text-[11px] text-zinc-400 capitalize">
+                            {l.type} <span className="text-zinc-600">{l.pct}%</span>
+                          </span>
+                        ))}
                       </div>
-                      <span className="text-[11px] text-zinc-500 w-8 text-right">{g.pct}%</span>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Archetypes grid */}
+            {demo.archetypes.length > 0 && (
+              <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-6">Personality Archetypes</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  {demo.archetypes.map((a) => (
+                    <div key={a.name} className="rounded-lg border border-white/[0.04] bg-zinc-900/40 p-4">
+                      <div className={`w-2 h-2 rounded-full mb-3 ${ARCHETYPE_COLORS[a.name] || "bg-zinc-600"}`} />
+                      <p className="text-[12px] font-medium text-white leading-snug">{a.name}</p>
+                      <p className="text-[11px] text-zinc-500 mt-1">{a.count.toLocaleString()} · {a.pct}%</p>
                     </div>
                   ))}
                 </div>
-
-                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5 mt-7">MBTI Groups</p>
-                <div className="grid grid-cols-2 gap-3">
-                  {demo.mbti.map((m) => (
-                    <div key={m.group} className="rounded-lg bg-zinc-900/60 px-3 py-2.5 text-center">
-                      <p className="text-sm font-medium text-white">{m.pct}%</p>
-                      <p className="text-[10px] text-zinc-500 mt-0.5">{m.group}</p>
-                    </div>
-                  ))}
-                </div>
               </div>
-            </div>
+            )}
 
-            {/* Archetypes */}
-            <div className="reveal rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
-              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-6">Personality Archetypes</p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {demo.archetypes.map((a) => (
-                  <div key={a.name} className="rounded-lg border border-white/[0.04] bg-zinc-900/40 p-4">
-                    <div className={`w-2 h-2 rounded-full mb-3 ${ARCHETYPE_COLORS[a.name] || "bg-zinc-600"}`} />
-                    <p className="text-[12px] font-medium text-white leading-snug">{a.name}</p>
-                    <p className="text-[11px] text-zinc-500 mt-1">{a.count.toLocaleString()} agents · {a.pct}%</p>
-                  </div>
-                ))}
+            {/* Region */}
+            {demo.region.length > 0 && (
+              <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Region</p>
+                <BarChart items={demo.region as unknown as Record<string, string | number>[]} labelKey="name" pctKey="pct" color="bg-emerald-500/50" />
               </div>
-            </div>
+            )}
 
-            {/* Location */}
-            <div className="reveal rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
-              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Location Type</p>
-              <div className="flex flex-wrap gap-3">
-                {demo.location.map((l) => (
-                  <div key={l.type} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-zinc-900/40">
-                    <span className="text-[12px] text-zinc-300 capitalize">{l.type}</span>
-                    <span className="text-[10px] text-zinc-600">{l.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="reveal text-center">
-              <p className="text-xs text-zinc-600 font-mono">
-                Population growing continuously · powered by Lewis 1.5 simulation · {demo.total.toLocaleString()} agents active
+            <div className="text-center pt-2">
+              <p className="text-xs text-zinc-600 font-mono mb-4">
+                Population growing continuously · powered by Lewis 1.5 · {demo.total.toLocaleString()} agents active
               </p>
-              <a href="/demo#research" className="inline-block mt-4 px-5 py-2.5 rounded-lg border border-indigo-500/30 text-indigo-400 text-sm hover:border-indigo-500/60 hover:bg-indigo-950/10 transition-colors">
+              <a href="/demo#research"
+                className="inline-block px-5 py-2.5 rounded-lg border border-indigo-500/30 text-indigo-400 text-sm hover:border-indigo-500/60 hover:bg-indigo-950/10 transition-colors">
                 Run a Focus Group with this panel →
               </a>
-            </div>
-          </div>
-        ) : (
-          <div className="flex justify-center py-16">
-            <div className="flex gap-1.5">
-              {[0, 1, 2].map((i) => (
-                <span key={i} className="w-2 h-2 rounded-full bg-amber-500/40 animate-pulse" style={{ animationDelay: `${i * 0.15}s` }} />
-              ))}
             </div>
           </div>
         )}
