@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* ─────────────────────────────────────────────────────────
    SCROLL REVEAL
@@ -21,22 +21,74 @@ function useScrollReveal() {
    NAV
 ───────────────────────────────────────────────────────── */
 function Nav() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const links = [
+    { href: "#benchmarks", label: "Benchmarks" },
+    { href: "#memory", label: "Memory" },
+    { href: "#the-swarm", label: "The Swarm" },
+    { href: "#products", label: "Products" },
+    { href: "/case-study", label: "Case Study", color: "text-indigo-400/80" },
+    { href: "/demo", label: "Demo", color: "text-amber-500/80" },
+  ];
+
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-white/[0.04] bg-black/80 backdrop-blur-xl">
+    <nav ref={ref} className="fixed top-0 w-full z-50 border-b border-white/[0.04] bg-black/80 backdrop-blur-xl">
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <a href="#" className="text-[15px] font-serif text-white tracking-tight">Lewis</a>
+
+        {/* Desktop */}
         <div className="hidden sm:flex items-center gap-6 text-[13px] text-zinc-500">
-          <a href="#benchmarks" className="hover:text-white transition-colors">Benchmarks</a>
-          <a href="#memory" className="hover:text-white transition-colors">Memory</a>
-          <a href="#models" className="hover:text-white transition-colors">Models</a>
-          <a href="#products" className="hover:text-white transition-colors">Products</a>
-          <a href="/case-study" className="hover:text-white transition-colors text-indigo-400/70">Case Study</a>
-          <a href="/demo" className="hover:text-white transition-colors text-amber-500/70">Demo</a>
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className={`hover:text-white transition-colors ${l.color || ""}`}>{l.label}</a>
+          ))}
           <a href="#access" className="px-3.5 py-1.5 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 transition-colors">
             Request Access
           </a>
         </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="sm:hidden p-2 text-zinc-400 hover:text-white transition-colors"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          {open ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M3 6h18M3 12h18M3 18h18" />
+            </svg>
+          )}
+        </button>
       </div>
+
+      {/* Mobile drawer */}
+      {open && (
+        <div className="sm:hidden border-t border-white/[0.04] bg-black/95 backdrop-blur-xl px-6 py-5 flex flex-col gap-4">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+              className={`text-[14px] transition-colors hover:text-white ${l.color || "text-zinc-400"}`}>
+              {l.label}
+            </a>
+          ))}
+          <a href="#access" onClick={() => setOpen(false)}
+            className="mt-1 px-4 py-2.5 rounded-lg bg-amber-500 text-black font-semibold text-[14px] text-center hover:bg-amber-400 transition-colors">
+            Request Access
+          </a>
+        </div>
+      )}
     </nav>
   );
 }
@@ -720,6 +772,167 @@ function RequestAccess() {
 }
 
 /* ─────────────────────────────────────────────────────────
+   THE SWARM — Demographics
+───────────────────────────────────────────────────────── */
+interface DemoData {
+  total: number;
+  archetypes: { name: string; count: number; pct: number }[];
+  gender: { name: string; count: number; pct: number }[];
+  age: { range: string; count: number; pct: number }[];
+  mbti: { group: string; count: number; pct: number }[];
+  location: { type: string; count: number; pct: number }[];
+}
+
+function TheSwarm() {
+  const [demo, setDemo] = useState<DemoData | null>(null);
+
+  useEffect(() => {
+    fetch("/api/demographics")
+      .then((r) => r.json())
+      .then(setDemo)
+      .catch(() => {});
+  }, []);
+
+  const ARCHETYPE_COLORS: Record<string, string> = {
+    "Conspiracy Theorist": "bg-rose-500",
+    "Philosopher": "bg-violet-500",
+    "Policy Wonk": "bg-blue-500",
+    "Crypto Degen": "bg-amber-500",
+    "MAGA Patriot": "bg-red-600",
+    "Tech Bro": "bg-cyan-500",
+    "Activist": "bg-emerald-500",
+    "Creator": "bg-pink-500",
+  };
+
+  return (
+    <section id="the-swarm" className="py-20 px-6 border-t border-white/[0.06]">
+      <div className="max-w-5xl mx-auto">
+        <div className="reveal text-center mb-14">
+          <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-3">Live Population</p>
+          <h2 className="font-serif text-white leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}>
+            The Swarm
+          </h2>
+          <p className="text-zinc-500 max-w-xl mx-auto text-base">
+            {demo ? (
+              <>A live, growing population of <span className="text-white font-semibold">{demo.total.toLocaleString()}</span> persistent AI agents — demographically diverse, behaviorally distinct. This is the panel behind every Lewsearch study.</>
+            ) : (
+              "A live, growing population of persistent AI agents — demographically diverse, behaviorally distinct."
+            )}
+          </p>
+        </div>
+
+        {demo ? (
+          <div className="space-y-10">
+            {/* Top stats row */}
+            <div className="reveal grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {[
+                { label: "Total Agents", value: demo.total.toLocaleString(), color: "text-amber-400" },
+                { label: "Archetypes", value: demo.archetypes.length.toString(), color: "text-white" },
+                { label: "MBTI Groups", value: "4", color: "text-white" },
+                { label: "Regions", value: demo.location.length.toString(), color: "text-white" },
+              ].map((s) => (
+                <div key={s.label} className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-5 text-center">
+                  <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+                  <p className="text-xs text-zinc-600 mt-1">{s.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Age */}
+              <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Age Distribution</p>
+                <div className="space-y-3">
+                  {demo.age.filter((a) => a.count > 0).map((a) => (
+                    <div key={a.range} className="flex items-center gap-3">
+                      <span className="text-[11px] font-mono text-zinc-500 w-12 shrink-0">{a.range}</span>
+                      <div className="flex-1 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+                        <div className="h-full bg-amber-500/60 rounded-full transition-all" style={{ width: `${a.pct}%` }} />
+                      </div>
+                      <span className="text-[11px] text-zinc-500 w-8 text-right">{a.pct}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Gender */}
+              <div className="rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Gender</p>
+                <div className="space-y-3">
+                  {demo.gender.map((g) => (
+                    <div key={g.name} className="flex items-center gap-3">
+                      <span className="text-[11px] font-mono text-zinc-500 w-20 shrink-0">{g.name}</span>
+                      <div className="flex-1 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+                        <div className="h-full bg-indigo-500/60 rounded-full" style={{ width: `${g.pct}%` }} />
+                      </div>
+                      <span className="text-[11px] text-zinc-500 w-8 text-right">{g.pct}%</span>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5 mt-7">MBTI Groups</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {demo.mbti.map((m) => (
+                    <div key={m.group} className="rounded-lg bg-zinc-900/60 px-3 py-2.5 text-center">
+                      <p className="text-sm font-medium text-white">{m.pct}%</p>
+                      <p className="text-[10px] text-zinc-500 mt-0.5">{m.group}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Archetypes */}
+            <div className="reveal rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-6">Personality Archetypes</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {demo.archetypes.map((a) => (
+                  <div key={a.name} className="rounded-lg border border-white/[0.04] bg-zinc-900/40 p-4">
+                    <div className={`w-2 h-2 rounded-full mb-3 ${ARCHETYPE_COLORS[a.name] || "bg-zinc-600"}`} />
+                    <p className="text-[12px] font-medium text-white leading-snug">{a.name}</p>
+                    <p className="text-[11px] text-zinc-500 mt-1">{a.count.toLocaleString()} agents · {a.pct}%</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="reveal rounded-xl border border-white/[0.06] bg-zinc-950/50 p-6">
+              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-5">Location Type</p>
+              <div className="flex flex-wrap gap-3">
+                {demo.location.map((l) => (
+                  <div key={l.type} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.06] bg-zinc-900/40">
+                    <span className="text-[12px] text-zinc-300 capitalize">{l.type}</span>
+                    <span className="text-[10px] text-zinc-600">{l.pct}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="reveal text-center">
+              <p className="text-xs text-zinc-600 font-mono">
+                Population growing continuously · powered by Lewis 1.5 simulation · {demo.total.toLocaleString()} agents active
+              </p>
+              <a href="/demo#research" className="inline-block mt-4 px-5 py-2.5 rounded-lg border border-indigo-500/30 text-indigo-400 text-sm hover:border-indigo-500/60 hover:bg-indigo-950/10 transition-colors">
+                Run a Focus Group with this panel →
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-center py-16">
+            <div className="flex gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <span key={i} className="w-2 h-2 rounded-full bg-amber-500/40 animate-pulse" style={{ animationDelay: `${i * 0.15}s` }} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────────────────────── */
 function Footer() {
@@ -754,6 +967,7 @@ export default function Home() {
         <Benchmarks />
         <ModelFamily />
         <Products />
+        <TheSwarm />
         <CaseStudyBanner />
         <RequestAccess />
       </main>

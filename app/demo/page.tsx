@@ -436,7 +436,7 @@ function PlaygroundPanel() {
         <StreamingText text={response} label={selectedData?.name ?? ""} isLoading={loading} />
         {isLive && response && (
           <>
-            <p className="text-[10px] text-zinc-600 mt-2 font-mono">Generated live by Lewis 1.5 (8B params) &middot; ~$0.002</p>
+          <p className="text-[10px] text-zinc-600 mt-2 font-mono">Generated live by Lewis 1.5 (8B params) &middot; ~$0.002</p>
             <ShareButtons
               copied={copied}
               onCopy={async () => {
@@ -461,7 +461,7 @@ function PlaygroundPanel() {
           <div><p className="text-2xl font-semibold text-amber-500">54.8%</p><p className="text-xs text-zinc-500 mt-0.5">Personality divergence (vs 46.4% Opus)</p></div>
           <div><p className="text-2xl font-semibold text-white">100%</p><p className="text-xs text-zinc-500 mt-0.5">Character persistence (vs 88% Opus)</p></div>
           <div><p className="text-2xl font-semibold text-white">8 vs 27</p><p className="text-xs text-zinc-500 mt-0.5">AI tells per response (Lewis vs Opus)</p></div>
-        </div>
+          </div>
       </div>
     </div>
   );
@@ -607,7 +607,7 @@ function ChatPanel() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {filteredAgents.map((agent) => (
-                <button
+        <button
                   key={agent.id}
                   onClick={() => selectAgent(agent.id)}
                   className="text-left p-4 rounded-xl border border-white/[0.06] bg-zinc-950/50 hover:bg-zinc-900/80 hover:border-emerald-500/30 transition-all duration-200 group"
@@ -631,9 +631,9 @@ function ChatPanel() {
                       </span>
                     )}
                   </div>
-                </button>
+        </button>
               ))}
-            </div>
+      </div>
           )}
         </>
       ) : (
@@ -655,7 +655,7 @@ function ChatPanel() {
                   <p className="text-xs font-mono text-emerald-500/70">@{agentFull.username}</p>
                   {agentFull.sub_personality && <p className="text-xs text-zinc-500 mt-1">{agentFull.sub_personality}</p>}
                   <p className="text-sm text-zinc-400 mt-2">{agentFull.bio}</p>
-                </div>
+              </div>
 
                 <div className="border-t border-white/[0.04] pt-4">
                   <p className="text-[10px] font-mono text-zinc-600 tracking-widest uppercase mb-2">Profile</p>
@@ -675,14 +675,14 @@ function ChatPanel() {
 
                 <div className="border-t border-white/[0.04] pt-4">
                   <p className="text-[10px] font-mono text-zinc-600 tracking-widest uppercase mb-3">Personality (Big Five)</p>
-                  <div className="space-y-2">
+              <div className="space-y-2">
                     <Big5Bar label="Open" value={agentFull.big5_openness} color="bg-violet-500" />
                     <Big5Bar label="Consc" value={agentFull.big5_conscientiousness} color="bg-blue-500" />
                     <Big5Bar label="Extra" value={agentFull.big5_extraversion} color="bg-amber-500" />
                     <Big5Bar label="Agree" value={agentFull.big5_agreeableness} color="bg-emerald-500" />
                     <Big5Bar label="Neuro" value={agentFull.big5_neuroticism} color="bg-rose-500" />
-                  </div>
-                </div>
+              </div>
+            </div>
 
                 {Array.isArray(identityData?.top_issues) && identityData.top_issues.length > 0 && (
                   <div className="border-t border-white/[0.04] pt-4">
@@ -692,8 +692,8 @@ function ChatPanel() {
                         <span key={issue} className="px-2 py-0.5 rounded-full text-[10px] bg-zinc-800 text-zinc-400">{issue}</span>
                       ))}
                     </div>
-                  </div>
-                )}
+        </div>
+      )}
 
                 {agentFull.beliefs.length > 0 && (
                   <div className="border-t border-white/[0.04] pt-4">
@@ -704,15 +704,15 @@ function ChatPanel() {
                           {belief}
                         </p>
                       ))}
-                    </div>
-                  </div>
+                </div>
+              </div>
                 )}
 
                 {typeof identityData?.formative_event === "string" && identityData.formative_event && (
                   <div className="border-t border-white/[0.04] pt-4">
                     <p className="text-[10px] font-mono text-zinc-600 tracking-widest uppercase mb-2">Formative Experience</p>
                     <p className="text-xs text-zinc-400 italic">&ldquo;{identityData.formative_event}&rdquo;</p>
-                  </div>
+          </div>
                 )}
 
                 {agentFull.personal_memory && agentFull.personal_memory.length > 50 && (
@@ -722,12 +722,12 @@ function ChatPanel() {
                       {agentFull.personal_memory.slice(0, 600)}
                       {agentFull.personal_memory.length > 600 && "..."}
                     </p>
-                  </div>
+              </div>
                 )}
 
                 <div className="border-t border-white/[0.04] pt-3">
                   <p className="text-[10px] text-zinc-600 font-mono">{agentFull.post_count} posts in simulation &middot; Powered by Lewis 1.5</p>
-                </div>
+              </div>
               </div>
             ) : (
               <div className="rounded-xl border border-white/[0.04] bg-zinc-950/50 p-5 animate-pulse">
@@ -737,10 +737,10 @@ function ChatPanel() {
                   <div className="h-3 bg-zinc-800 rounded w-full" />
                   <div className="h-3 bg-zinc-800 rounded w-full" />
                   <div className="h-3 bg-zinc-800 rounded w-4/5" />
-                </div>
-              </div>
-            )}
+            </div>
           </div>
+      )}
+    </div>
 
           {/* Chat Area */}
           <div className="flex-1 flex flex-col rounded-xl border border-white/[0.06] bg-zinc-950 min-h-[500px]">
@@ -1069,7 +1069,7 @@ function FocusGroupPanel() {
             <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-3">Select a cohort</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {cohorts.map((c) => (
-                <button
+              <button
                   key={c.id}
                   onClick={() => loadCohort(c.id)}
                   className={`text-left p-4 rounded-xl border transition-all ${
@@ -1080,10 +1080,10 @@ function FocusGroupPanel() {
                 >
                   <p className="text-sm font-medium text-white">{c.label}</p>
                   <p className="text-xs text-zinc-500 mt-1">{c.description}</p>
-                </button>
-              ))}
-            </div>
-          </div>
+              </button>
+            ))}
+        </div>
+      </div>
 
           {!loadingCohort && agents.length > 0 && (
             <div>
@@ -1097,9 +1097,9 @@ function FocusGroupPanel() {
                     {a.identity?.party_id && (
                       <p className="text-[9px] text-zinc-600">{PARTY_DISPLAY[a.identity.party_id as string] || String(a.identity.party_id)}</p>
                     )}
-                  </div>
-                ))}
               </div>
+                ))}
+            </div>
             </div>
           )}
 
@@ -1112,7 +1112,7 @@ function FocusGroupPanel() {
               className="w-full h-24 px-4 py-3 rounded-lg bg-zinc-950/80 border border-zinc-800 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 resize-none text-sm leading-relaxed"
               spellCheck={false}
             />
-          </div>
+                    </div>
 
           <button
             onClick={() => { setStep("baseline"); runBaseline(); }}
@@ -1121,7 +1121,7 @@ function FocusGroupPanel() {
           >
             Run Baseline Survey
           </button>
-        </div>
+                  </div>
       )}
 
       {/* Step: Baseline results + Exposure input */}
@@ -1134,11 +1134,11 @@ function FocusGroupPanel() {
                   <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse" />
                   <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse [animation-delay:0.15s]" />
                   <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse [animation-delay:0.3s]" />
-                </div>
+                    </div>
               </div>
               <p className="text-zinc-500 text-sm">Surveying {agents.length} agents... {(elapsed / 1000).toFixed(1)}s</p>
-            </div>
-          )}
+                  </div>
+                )}
 
           {baselineResponses.length > 0 && (
             <>
@@ -1198,8 +1198,8 @@ function FocusGroupPanel() {
                   <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse" />
                   <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse [animation-delay:0.15s]" />
                   <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse [animation-delay:0.3s]" />
-                </div>
-              </div>
+            </div>
+          </div>
               <p className="text-zinc-500 text-sm">Re-surveying after exposure... {(elapsed / 1000).toFixed(1)}s</p>
             </div>
           )}
@@ -1214,7 +1214,7 @@ function FocusGroupPanel() {
               <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse" />
               <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse [animation-delay:0.15s]" />
               <span className="w-2 h-2 rounded-full bg-indigo-500/70 animate-pulse [animation-delay:0.3s]" />
-            </div>
+          </div>
           </div>
           <p className="text-zinc-500 text-sm">Re-surveying after exposure... {(elapsed / 1000).toFixed(1)}s</p>
         </div>
@@ -1291,8 +1291,8 @@ function FocusGroupPanel() {
                       <div className="flex flex-wrap gap-1.5">
                         {d.agent.beliefs.slice(0, 3).map((b, i) => (
                           <span key={i} className="px-2 py-0.5 rounded-full text-[9px] bg-zinc-800 text-zinc-500 max-w-xs truncate">{b}</span>
-                        ))}
-                      </div>
+        ))}
+      </div>
                     </div>
                   )}
                 </div>
@@ -1332,6 +1332,54 @@ function FocusGroupPanel() {
               Each agent has persistent memory and beliefs from 30 days of simulated social interaction. Belief drift is driven by personality conditioning — skeptical agents resist, open agents engage.
             </p>
           </div>
+
+          {/* Lewsearch upsell */}
+          <div className="rounded-xl border border-indigo-500/20 bg-gradient-to-br from-indigo-950/20 to-violet-950/10 p-7">
+            <div className="flex flex-wrap items-start justify-between gap-6">
+              <div className="flex-1 min-w-[220px]">
+                <p className="text-[10px] font-mono text-indigo-400/60 tracking-widest uppercase mb-2">Want the full report?</p>
+                <h3 className="text-white font-semibold text-lg mb-2">Lewsearch Enterprise</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed mb-4">
+                  This demo runs {driftData.length} agents. A full Lewsearch study runs <strong className="text-white">500–10,000 agents</strong> across custom demographics, over simulated days or months, and delivers a branded PDF report with cross-tabs, belief segmentation, and predictive drift analysis.
+                </p>
+                <div className="space-y-2 mb-5">
+                  {[
+                    ["Custom population", "Choose age, gender, politics, location, archetype mix"],
+                    ["Simulated time", "Run the same panel over 30 simulated days to track opinion shift"],
+                    ["Lower cost", "$0.002/response vs $15–80/respondent for traditional panels"],
+                    ["Belief segmentation", "See exactly which personality types are persuadable — and why"],
+                  ].map(([title, desc]) => (
+                    <div key={title} className="flex gap-2.5">
+                      <span className="text-indigo-400 mt-0.5 shrink-0">✓</span>
+                      <span className="text-sm text-zinc-400"><span className="text-zinc-200">{title}</span> — {desc}</span>
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href="https://calendly.com/hi-swarmgram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-medium text-sm transition-colors"
+                >
+                  Book a free consultation →
+                </a>
+              </div>
+              <div className="shrink-0 hidden sm:flex flex-col gap-2 text-center">
+                <div className="rounded-xl border border-indigo-500/20 bg-indigo-950/20 px-6 py-4">
+                  <p className="text-2xl font-bold text-white">$0.002</p>
+                  <p className="text-[10px] text-zinc-500 mt-1">per agent response</p>
+                </div>
+                <div className="rounded-xl border border-white/[0.06] bg-zinc-950/40 px-6 py-4">
+                  <p className="text-2xl font-bold text-zinc-300">10,000+</p>
+                  <p className="text-[10px] text-zinc-500 mt-1">agents in the panel</p>
+                </div>
+                <div className="rounded-xl border border-white/[0.06] bg-zinc-950/40 px-6 py-4">
+                  <p className="text-2xl font-bold text-amber-400">30 days</p>
+                  <p className="text-[10px] text-zinc-500 mt-1">simulated in minutes</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -1358,7 +1406,21 @@ export default function DemoPage() {
       <nav className="fixed top-0 w-full z-50 border-b border-white/[0.04] bg-black/80 backdrop-blur-xl">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="text-[15px] font-serif text-white tracking-tight hover:text-amber-400 transition-colors">Lewis</Link>
-          <Link href="/" className="text-[13px] text-zinc-500 hover:text-white transition-colors">Back to Home</Link>
+          <div className="hidden sm:flex items-center gap-5 text-[13px] text-zinc-500">
+            <button onClick={() => { setActiveTab("playground"); window.history.replaceState(null, "", "#playground"); }}
+              className="hover:text-white transition-colors">Playground</button>
+            <button onClick={() => { setActiveTab("chat"); window.history.replaceState(null, "", "#chat"); }}
+              className="hover:text-white transition-colors">Chat</button>
+            <button onClick={() => { setActiveTab("research"); window.history.replaceState(null, "", "#research"); }}
+              className="hover:text-white transition-colors text-indigo-400/70">Focus Group</button>
+            <Link href="/case-study" className="hover:text-white transition-colors text-indigo-400/70">Case Study</Link>
+            <Link href="/" className="hover:text-zinc-300 transition-colors">← Home</Link>
+          </div>
+          {/* Mobile: show active tab label + home link */}
+          <div className="flex sm:hidden items-center gap-4 text-[13px]">
+            <span className="text-zinc-600 capitalize">{activeTab === "research" ? "Focus Group" : activeTab}</span>
+            <Link href="/" className="text-zinc-500 hover:text-white transition-colors">← Home</Link>
+          </div>
         </div>
       </nav>
 
