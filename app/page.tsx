@@ -483,7 +483,7 @@ function ModelFamily() {
             <div className="space-y-2 text-sm text-zinc-500">
               <div className="flex justify-between"><span>Base model</span><span className="text-zinc-300">LLaMA 3.1 8B</span></div>
               <div className="flex justify-between"><span>Source agents</span><span className="text-zinc-300">2,886</span></div>
-              <div className="flex justify-between"><span>Interactions</span><span className="text-zinc-300">~147K</span></div>
+              <div className="flex justify-between"><span>Training pairs</span><span className="text-zinc-300">381K</span></div>
               <div className="flex justify-between"><span>Memory depth</span><span className="text-zinc-300">30 days</span></div>
             </div>
           </div>
