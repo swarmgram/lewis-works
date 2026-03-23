@@ -4,12 +4,11 @@ const LEWIS_API = process.env.LEWIS_API_URL || "https://knl3iun7rqcvmp-8000.prox
 const SUPA_URL = "https://ejxyyspduqlvhbtsczfc.supabase.co";
 const SUPA_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqeHl5c3BkdXFsdmhidHNjemZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNjA4NTgsImV4cCI6MjA4ODczNjg1OH0.jlJkTcAsPjarO-DJ4Dn0Pv381icQRfS2udulK2yLFgU";
 
-// Valid access codes — add more via env var LEWSEARCH_CODES (comma-separated)
+// Valid access codes loaded exclusively from LEWSEARCH_CODES env var (comma-separated)
+// Set this in Netlify: Site Config → Environment Variables → LEWSEARCH_CODES
 function getValidCodes(): Set<string> {
-  const base = ["LEWIS2026", "SWARM001", "DEMO2026", "PITCH001", "RESEARCH1",
-                 "WAVE2026", "SYNTH001", "PANEL001", "INSIGHT1", "BRAND001"];
-  const extra = (process.env.LEWSEARCH_CODES || "").split(",").map(s => s.trim()).filter(Boolean);
-  return new Set([...base, ...extra]);
+  const codes = (process.env.LEWSEARCH_CODES || "").split(",").map(s => s.trim().toUpperCase()).filter(Boolean);
+  return new Set(codes);
 }
 
 async function fetchAgents(archetypes: string[], n: number) {

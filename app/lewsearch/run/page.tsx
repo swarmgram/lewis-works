@@ -25,7 +25,15 @@ function SentimentBar({ positive, neutral, negative }: { positive: number; neutr
 
 function RunPageContent() {
   const params = useSearchParams();
+  const router = useRouter();
   const code = params.get("code") || "";
+
+  // Hard gate — no code in URL means you shouldn't be here
+  useEffect(() => {
+    if (!code) router.replace("/lewsearch#run");
+  }, [code, router]);
+
+  if (!code) return null;
 
   const [step, setStep] = useState<"form" | "running" | "results">("form");
   const [brand, setBrand] = useState("");

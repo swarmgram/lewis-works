@@ -38,7 +38,7 @@ function Nav() {
     { href: "#the-swarm", label: "The Swarm" },
     { href: "#products", label: "Products" },
     { href: "/lewsearch", label: "Lewsearch", color: "text-emerald-400/80" },
-    { href: "/npc", label: "LewNPC", color: "text-violet-400/80" },
+    { href: "/lewnpc", label: "LewNPC", color: "text-violet-400/80" },
     { href: "/case-study", label: "Case Study", color: "text-indigo-400/80" },
     { href: "/demo", label: "Demo", color: "text-amber-500/80" },
   ];
@@ -638,7 +638,7 @@ function Products() {
                 </div>
               </div>
 
-              <a href="/npc" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
+              <a href="/lewnpc" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
                 Talk to an NPC Live →
                 <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-none stroke-current stroke-[1.5]">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h10M9 4l4 4-4 4" />
@@ -894,12 +894,16 @@ function TheSwarm() {
           <h2 className="font-serif text-white leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}>
             The Swarm
           </h2>
-          <p className="text-zinc-500 max-w-xl mx-auto text-base">
+          <p className="text-zinc-500 max-w-xl mx-auto text-base mb-5">
             {demo
               ? <>A live population of <span className="text-white font-semibold">{demo.total.toLocaleString()}</span> persistent AI agents — demographically diverse, behaviorally distinct. This is the panel behind every Lewsearch study.</>
               : "A live, growing population of persistent AI agents — demographically diverse, behaviorally distinct. The panel behind every Lewsearch study."
             }
           </p>
+          <a href="https://swarmgram.com/swarm" target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition-colors border border-amber-500/20 hover:border-amber-500/40 px-4 py-2 rounded-full">
+            Watch the Swarm live on swarmgram.com →
+          </a>
         </div>
 
         {/* Loading */}
