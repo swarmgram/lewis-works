@@ -60,9 +60,14 @@ export default function LewNPCPage() {
 
   useEffect(() => {
     const onDown = (e: KeyboardEvent) => {
+      // Don't steal keypresses when the chat input is focused
+      if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") return;
       keysRef.current.add(e.key);
       if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)) e.preventDefault();
-      if ((e.key === "e" || e.key === "E") && nearNPC && !activeNPC) openChat(nearNPC);
+      if ((e.key === "e" || e.key === "E") && nearNPC) {
+        e.preventDefault();
+        openChat(nearNPC);
+      }
       if (e.key === "Escape") setActiveNPC(null);
     };
     const onUp = (e: KeyboardEvent) => keysRef.current.delete(e.key);
@@ -74,7 +79,7 @@ export default function LewNPCPage() {
       window.removeEventListener("keyup", onUp);
       cancelAnimationFrame(animRef.current);
     };
-  }, [moveLoop, nearNPC, activeNPC]);
+  }, [moveLoop, nearNPC]);
 
   useEffect(() => {
     const closest = NPCS.find(npc => {
@@ -86,6 +91,7 @@ export default function LewNPCPage() {
 
   function openChat(npc: NPC) {
     setActiveNPC(npc);
+    setInput("");
     setShowIntro(false);
     if (!msgMap[npc.id]) {
       const greetings: Record<string, string> = {
@@ -95,6 +101,11 @@ export default function LewNPCPage() {
       };
       setMsgMap(m => ({ ...m, [npc.id]: [{ from: "npc", text: greetings[npc.id] }] }));
     }
+    // Focus the input after React re-renders (so the E keypress doesn't land in it)
+    setTimeout(() => {
+      const input = document.querySelector<HTMLInputElement>("input[placeholder='Say something…']");
+      if (input) input.focus();
+    }, 50);
   }
 
   async function sendMessage() {
@@ -359,7 +370,7 @@ export default function LewNPCPage() {
           {activeNPC && (
             <div className="p-3 border-t border-amber-900/15">
               <div className="flex gap-2 mb-2">
-                <input autoFocus type="text" value={input}
+                <input type="text" value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && sendMessage()}
                   placeholder="Say something…"
