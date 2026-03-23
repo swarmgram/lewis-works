@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     };
 
     await resend.emails.send({
-      from:    "Lewis Access Request <noreply@lewis.works>",
+      from:    "Lewis Access Request <noreply@phuaintia.resend.app>",
       to:      ["hi@swarmgram.com"],
       replyTo: email,
       subject: `[Lewis Access Request] ${name}${company ? ` — ${company}` : ""}`,
