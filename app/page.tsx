@@ -1065,6 +1065,7 @@ function Footer() {
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4 text-xs text-zinc-500">
           <a href="https://swarmgram.com" className="hover:text-zinc-300 transition-colors">Swarmgram</a>
+          <a href="/validation" className="hover:text-amber-400 transition-colors text-amber-500/70 font-medium">Lewis vs. Pew →</a>
           <a href="https://x.com/swarmgram" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">@swarmgram</a>
           <a href="https://x.com/greatswyckoff" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">@greatswyckoff</a>
           <a href="https://github.com/swarmgram/swarmgrampublic" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
