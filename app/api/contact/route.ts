@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-
-export const runtime = "edge";
+import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const { name, email, company, type, useCase } = await req.json();
 
@@ -21,9 +18,17 @@ export async function POST(req: NextRequest) {
       other:      "Other",
     };
 
-    await resend.emails.send({
-      from:    "Lewis Access Request <noreply@phuaintia.resend.app>",
-      to:      ["hi@swarmgram.com"],
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from:    `"Lewis Access Request" <${process.env.GMAIL_USER}>`,
+      to:      process.env.GMAIL_USER,
       replyTo: email,
       subject: `[Lewis Access Request] ${name}${company ? ` — ${company}` : ""}`,
       html: `
