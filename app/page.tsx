@@ -173,7 +173,7 @@ function FounderVideo() {
         </div>
         <div className="reveal rounded-xl overflow-hidden border border-white/[0.06] bg-zinc-950 aspect-video">
           <iframe
-            src="https://player.vimeo.com/video/1175626793?badge=0&autopause=0&player_id=0&app_id=58479&transparent=0&title=0&byline=0&portrait=0"
+            src="https://player.vimeo.com/video/1175626793?badge=0&autopause=0&player_id=0&app_id=58479&transparent=0&title=0&byline=0&portrait=0&pip=0&collections=0&share=0&like=0&watchlater=0&speed=0"
             className="w-full h-full"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
