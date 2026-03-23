@@ -726,6 +726,31 @@ function CaseStudyBanner() {
 ───────────────────────────────────────────────────────── */
 function RequestAccess() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [fields, setFields] = useState({ name: "", email: "", company: "", type: "", useCase: "" });
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fields),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Something went wrong.");
+      }
+      setSubmitted(true);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to send. Please email hi@swarmgram.com directly.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section id="access" className="py-24 px-6 border-t border-white/[0.06]">
@@ -745,13 +770,28 @@ function RequestAccess() {
             <p className="text-sm text-zinc-500">We&apos;ll be in touch within 48 hours.</p>
           </div>
         ) : (
-          <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-4 text-left">
+          <form onSubmit={handleSubmit} className="space-y-4 text-left">
             <div className="grid grid-cols-2 gap-4">
-              <input type="text" placeholder="Name" required className="col-span-1 px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40" />
-              <input type="email" placeholder="Email" required className="col-span-1 px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40" />
+              <input
+                type="text" placeholder="Name" required
+                value={fields.name} onChange={(e) => setFields(f => ({ ...f, name: e.target.value }))}
+                className="col-span-1 px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40"
+              />
+              <input
+                type="email" placeholder="Email" required
+                value={fields.email} onChange={(e) => setFields(f => ({ ...f, email: e.target.value }))}
+                className="col-span-1 px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40"
+              />
             </div>
-            <input type="text" placeholder="Company" className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40" />
-            <select required className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-zinc-400 focus:outline-none focus:border-amber-500/40 appearance-none">
+            <input
+              type="text" placeholder="Company"
+              value={fields.company} onChange={(e) => setFields(f => ({ ...f, company: e.target.value }))}
+              className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40"
+            />
+            <select
+              required value={fields.type} onChange={(e) => setFields(f => ({ ...f, type: e.target.value }))}
+              className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-zinc-400 focus:outline-none focus:border-amber-500/40 appearance-none"
+            >
               <option value="">I&apos;m a...</option>
               <option value="investor">Investor / VC</option>
               <option value="enterprise">Enterprise buyer</option>
@@ -760,9 +800,17 @@ function RequestAccess() {
               <option value="political">Political / polling</option>
               <option value="other">Other</option>
             </select>
-            <textarea placeholder="Tell us about your use case (optional)" rows={3} className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 resize-none" />
-            <button type="submit" className="w-full py-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm transition-colors">
-              Request Access
+            <textarea
+              placeholder="Tell us about your use case (optional)" rows={3}
+              value={fields.useCase} onChange={(e) => setFields(f => ({ ...f, useCase: e.target.value }))}
+              className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/[0.06] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 resize-none"
+            />
+            {error && <p className="text-sm text-red-400">{error}</p>}
+            <button
+              type="submit" disabled={loading}
+              className="w-full py-3 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-black font-semibold text-sm transition-colors"
+            >
+              {loading ? "Sending…" : "Request Access"}
             </button>
           </form>
         )}
