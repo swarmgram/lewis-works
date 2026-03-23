@@ -582,28 +582,28 @@ function Products() {
               </div>
               <h3 className="text-2xl font-semibold text-white mb-3">Lewsearch</h3>
               <p className="text-zinc-400 leading-relaxed max-w-2xl mb-6">
-                The first polling platform with persistent synthetic respondents. Run a poll in January,
-                run it again in March &mdash; the same 10,000 synthetic people remember their previous answers
-                and show genuine opinion drift. No other polling technology can do this.
+                Run a 500-person focus group in 4 hours for $200 instead of $50,000 and 6 weeks.
+                Know how your audience reacts to a crisis, a launch, or a price change &mdash; before you make the move.
+                Qualtrics validated the category last week. We&apos;re 10&times; deeper.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div className="rounded-lg border border-indigo-900/30 bg-indigo-950/10 p-4">
-                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Longitudinal Polling</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">Track opinion drift across the same population over weeks or months. No recruitment. No attrition.</p>
+                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Crisis Simulation</h4>
+                  <p className="text-xs text-zinc-500 leading-relaxed">See how 2,000 demographically matched consumers react to bad news over 30 simulated days. $80K emergency research in 10 minutes.</p>
                 </div>
                 <div className="rounded-lg border border-indigo-900/30 bg-indigo-950/10 p-4">
-                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Persistent Memory</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">Respondents remember past polls, product tests, and ad exposures. Measure cumulative impact.</p>
+                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Belief Drift</h4>
+                  <p className="text-xs text-zinc-500 leading-relaxed">Unlike Qualtrics static personas, Lewis agents remember every prior study. Run the same panel in March, June, and September — they evolve.</p>
                 </div>
                 <div className="rounded-lg border border-indigo-900/30 bg-indigo-950/10 p-4">
-                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Demographic Precision</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">10K+ personas segmented by age, income, region, political lean, and behavioral archetype.</p>
+                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Free First Study</h4>
+                  <p className="text-xs text-zinc-500 leading-relaxed">First study on us. 240 agents, 3 cohorts, 30 simulated days, full PDF report. Traditional cost: $4,000–$20,000.</p>
                 </div>
               </div>
 
-              <a href="/demo#research" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
-                Try the Focus Group Demo
+              <a href="/lewsearch" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors">
+                Run a Free Study
                 <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-none stroke-current stroke-[1.5]">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
@@ -638,8 +638,8 @@ function Products() {
                 </div>
               </div>
 
-              <a href="/demo#chat" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
-                Try the Tavern Test
+              <a href="/npc" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors">
+                Talk to an NPC Live →
                 <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-none stroke-current stroke-[1.5]">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
