@@ -39,6 +39,7 @@ function Nav() {
     { href: "#products", label: "Products" },
     { href: "/lewsearch", label: "Lewsearch", color: "text-emerald-400/80" },
     { href: "/lewnpc", label: "LewNPC", color: "text-violet-400/80" },
+    { href: "/validation", label: "vs. Pew", color: "text-zinc-400/80" },
     { href: "/case-study", label: "Case Study", color: "text-indigo-400/80" },
     { href: "/demo", label: "Demo", color: "text-amber-500/80" },
   ];
@@ -471,6 +472,26 @@ function ModelFamily() {
             Each Lewis generation is trained on richer data from a larger, more diverse
             agent population. Behavioral patterns compound across generations.
           </p>
+        </div>
+
+        {/* Validation callout */}
+        <div className="reveal rounded-xl border border-white/[0.06] bg-zinc-950 p-6 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-2">Real-world validation</p>
+              <p className="text-white text-sm font-medium mb-1">Lewis vs. Pew Research Center</p>
+              <p className="text-zinc-500 text-xs leading-relaxed max-w-xl">
+                We ran our agents against published Pew polls and compared results to ground truth.
+                Lewis correctly models partisan behavioral differences across every study.
+                Claude Sonnet returned the <em>identical</em> answer for every demographic — zero variation.
+                We&apos;re not perfectly calibrated yet. We explain exactly why, and the trajectory to fix it.
+              </p>
+            </div>
+            <a href="/validation"
+              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.08] text-zinc-400 hover:text-white hover:border-white/[0.16] text-sm transition-colors whitespace-nowrap">
+              See the data →
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
