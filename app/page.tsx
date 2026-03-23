@@ -136,7 +136,7 @@ function Hero() {
 
         <div className="fade-5 inline-grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10 text-sm">
           <div className="text-center">
-            <div className="text-xl font-bold text-white">10,000</div>
+            <div className="text-xl font-bold text-white">10,474</div>
             <div className="text-zinc-600 text-xs mt-0.5">source agents</div>
           </div>
           <div className="text-center">
@@ -172,7 +172,7 @@ function FounderVideo() {
         </div>
         <div className="reveal rounded-xl overflow-hidden border border-white/[0.06] bg-zinc-950 aspect-video">
           <iframe
-            src="https://player.vimeo.com/video/1175626793?badge=0&autopause=0&player_id=0&app_id=58479&transparent=0"
+            src="https://player.vimeo.com/video/1175626793?badge=0&autopause=0&player_id=0&app_id=58479&transparent=0&title=0&byline=0&portrait=0"
             className="w-full h-full"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
@@ -191,7 +191,7 @@ function ComparisonTable() {
   const rows = [
     { label: "Memory Architecture", lewis: "Structured external memory (Supabase)", opus: "Context window stuffing", sonnet: "Context window stuffing" },
     { label: "Personality Source", lewis: "Living agent behavioral data", opus: "Internet text + RLHF", sonnet: "Internet text + RLHF" },
-    { label: "Cost per response", lewis: "$0.002 (self-hosted)", opus: "$0.25", sonnet: "$0.05" },
+    { label: "Cost per response", lewis: "<$0.002 (self-hosted)", opus: "$0.25", sonnet: "$0.05" },
     { label: "Memory cost (100 convos)", lewis: "$0.00", opus: "$24.19", sonnet: "~$5.00" },
     { label: "Character persistence", lewis: "100% (adversarial tested)", opus: "88%", sonnet: "92%" },
     { label: "AI tells per response", lewis: "0.08 avg", opus: "0.27 avg", sonnet: "0.13 avg" },
@@ -483,7 +483,7 @@ function ModelFamily() {
             <div className="space-y-2 text-sm text-zinc-500">
               <div className="flex justify-between"><span>Base model</span><span className="text-zinc-300">LLaMA 3.1 8B</span></div>
               <div className="flex justify-between"><span>Source agents</span><span className="text-zinc-300">2,886</span></div>
-              <div className="flex justify-between"><span>Training pairs</span><span className="text-zinc-300">381K</span></div>
+              <div className="flex justify-between"><span>Interactions</span><span className="text-zinc-300">~147K</span></div>
               <div className="flex justify-between"><span>Memory depth</span><span className="text-zinc-300">30 days</span></div>
             </div>
           </div>
@@ -495,7 +495,7 @@ function ModelFamily() {
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">Lewis 1.5</h3>
             <div className="space-y-2 text-sm text-zinc-500">
-              <div className="flex justify-between"><span>Source agents</span><span className="text-zinc-300">10,000</span></div>
+              <div className="flex justify-between"><span>Source agents</span><span className="text-zinc-300">10,474</span></div>
               <div className="flex justify-between"><span>Training pairs</span><span className="text-zinc-300">1M+</span></div>
               <div className="flex justify-between"><span>Benchmarked</span><span className="text-amber-400">5/6 vs Opus</span></div>
               <div className="flex justify-between"><span>Memory cost</span><span className="text-amber-400">$0</span></div>
@@ -546,10 +546,13 @@ function ModelFamily() {
               </div>
             ))}
           </div>
-          <p className="text-center text-xs text-zinc-700 mt-6">
-            Each generation inherits personality traits, memories, and behavioral patterns from its ancestors.
-            <br />This compounding signal cannot be replicated from synthetic data.
-          </p>
+          <div className="mt-8 rounded-lg border border-amber-500/20 bg-amber-950/10 p-4 text-center">
+            <p className="text-xs text-amber-400/80 font-medium mb-1">The Compounding Moat</p>
+            <p className="text-xs text-zinc-500 leading-relaxed max-w-xl mx-auto">
+              Each generation&apos;s behavioral output trains the next Lewis model. Gen 1 agents produce richer, more divergent behavior than Gen 0 — because they were trained on it.
+              Gen 2 will be richer still. <span className="text-zinc-400">Frontier models get older. Lewis gets better.</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -582,7 +585,7 @@ function Products() {
               </div>
               <h3 className="text-2xl font-semibold text-white mb-3">Lewsearch</h3>
               <p className="text-zinc-400 leading-relaxed max-w-2xl mb-6">
-                Run a 500-person focus group in 4 hours for $200 instead of $50,000 and 6 weeks.
+                Run a 2,000-person focus group in hours instead of $50,000 and 6 weeks.
                 Know how your audience reacts to a crisis, a launch, or a price change &mdash; before you make the move.
                 Qualtrics validated the category last week. We&apos;re 10&times; deeper.
               </p>
@@ -590,15 +593,15 @@ function Products() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div className="rounded-lg border border-indigo-900/30 bg-indigo-950/10 p-4">
                   <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Crisis Simulation</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">See how 2,000 demographically matched consumers react to bad news over 30 simulated days. $80K emergency research in 10 minutes.</p>
+                  <p className="text-xs text-zinc-500 leading-relaxed">See how 2,000 demographically matched consumers react to bad news over 30 simulated days. $80K emergency research in minutes.</p>
                 </div>
                 <div className="rounded-lg border border-indigo-900/30 bg-indigo-950/10 p-4">
                   <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Belief Drift</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">Unlike Qualtrics static personas, Lewis agents remember every prior study. Run the same panel in March, June, and September — they evolve.</p>
+                  <p className="text-xs text-zinc-500 leading-relaxed">Unlike Qualtrics static personas, Lewis agents carry personality between studies. Enterprise contracts unlock longitudinal tracking across months.</p>
                 </div>
                 <div className="rounded-lg border border-indigo-900/30 bg-indigo-950/10 p-4">
-                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Free First Study</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">First study on us. 240 agents, 3 cohorts, 30 simulated days, full PDF report. Traditional cost: $4,000–$20,000.</p>
+                  <h4 className="text-sm font-medium text-indigo-300/80 mb-1">Free During Beta</h4>
+                  <p className="text-xs text-zinc-500 leading-relaxed">First studies are on us during beta. 240 agents, 3 cohorts, 30 simulated days, full PDF report. Traditional cost: $4,000–$20,000.</p>
                 </div>
               </div>
 
@@ -634,7 +637,7 @@ function Products() {
                 </div>
                 <div className="rounded-lg border border-violet-900/30 bg-violet-950/10 p-4">
                   <h4 className="text-sm font-medium text-violet-300/80 mb-1">Simple REST API</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed">One endpoint: POST /v1/npc/chat. Send character context + player message, receive in-character dialogue.</p>
+                  <p className="text-xs text-zinc-500 leading-relaxed">Simple REST API. Send character context + player message, receive in-character dialogue. Request access to integrate.</p>
                 </div>
               </div>
 

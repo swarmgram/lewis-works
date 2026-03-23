@@ -12,6 +12,11 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
   title: "Lewis — The personality model that remembers",
   description:
     "Lewis 1.5 beats Claude Opus on 3/6 personality axes at 1/125th the cost. Persistent memory architecture with $0 scaling. Enterprise API for market research, game AI, and simulation.",
