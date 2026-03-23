@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface WaveData { wave: string; positive: number; neutral: number; negative: number; quotes: { persona: string; text: string }[]; }
 interface CohortResult { label: string; n: number; waves: WaveData[]; drift: number; insight: string; quotes: { persona: string; text: string }[]; }
