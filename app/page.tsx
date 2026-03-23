@@ -517,7 +517,7 @@ function ModelFamily() {
             <h3 className="text-lg font-semibold text-white mb-2">Lewis 1.5</h3>
             <div className="space-y-2 text-sm text-zinc-500">
               <div className="flex justify-between"><span>Source agents</span><span className="text-zinc-300">10,474</span></div>
-              <div className="flex justify-between"><span>Training pairs</span><span className="text-zinc-300">1M+</span></div>
+              <div className="flex justify-between"><span>Training pairs</span><span className="text-zinc-300">381K</span></div>
               <div className="flex justify-between"><span>Benchmarked</span><span className="text-amber-400">5/6 vs Opus</span></div>
               <div className="flex justify-between"><span>Memory cost</span><span className="text-amber-400">$0</span></div>
             </div>
