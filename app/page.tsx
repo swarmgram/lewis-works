@@ -37,6 +37,8 @@ function Nav() {
     { href: "#memory", label: "Memory" },
     { href: "#the-swarm", label: "The Swarm" },
     { href: "#products", label: "Products" },
+    { href: "/lewsearch", label: "Lewsearch", color: "text-emerald-400/80" },
+    { href: "/npc", label: "LewNPC", color: "text-violet-400/80" },
     { href: "/case-study", label: "Case Study", color: "text-indigo-400/80" },
     { href: "/demo", label: "Demo", color: "text-amber-500/80" },
   ];
